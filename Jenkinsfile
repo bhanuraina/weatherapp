@@ -1,30 +1,23 @@
-pipeline {
-  agent any
-  options {
-    parallelsAlwaysFailFast()  
-  }
-  stages {
-
-    stage('Parallel') {
-      parallel {
-        stage('docker-compose up') {
-          steps {
-            sh 'docker-compose up'
-          }
-        }
-        stage('test') {
-          steps {
-            sh 'sleep 10'
-            sh 'docker-compose down --remove-orphans'
-          }
-        }
+node {
+  try {
+    stage('Checkout') {
+      checkout scm
+    }
+    stage('Environment') {
+      sh 'git --version'
+      echo "Branch: ${env.BRANCH_NAME}"
+      sh 'docker -v'
+      sh 'printenv'
+    }
+    
+    stage('Deploy'){
+      if(env.BRANCH_NAME == 'master'){
+        sh 'docker compose up'
+        
       }
     }
   }
-
-  post { 
-    always {
-      sh 'docker-compose down --remove-orphans'
-    }
+  catch (err) {
+    throw err
   }
 }
