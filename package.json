@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "npm install --save express"
+    "url": "https://github.com/bhanuraina/weatherapp.git"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +16,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "ejs": "^3.1.6",
+    "express": "^4.17.1",
     "geomagnetism": "^0.1.1",
     "node-geocoder": "^3.27.0"
   }
