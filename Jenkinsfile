@@ -12,7 +12,7 @@ node {
     
     stage('Deploy'){
      
-        sh 'docker-compose up'
+        sh '/usr/local/bin/docker-compose/docker-compose up'
         
       
     }
