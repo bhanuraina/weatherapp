@@ -3,8 +3,19 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
 const app = express();
-
+var mongoose = require("mongoose");
 const apiKey = "13afb31088fddda8c16ce9f2914774b4";
+var configDB = require("./config/database.js");
+
+const cors = require("cors");
+
+var corsOptions = {
+  origin: "http://localhost:8081",
+};
+
+app.use(cors(corsOptions));
+
+// configuration ===============================================================
 
 app.use(express.static("public"));
 app.use(bodyParser.json());
@@ -48,6 +59,19 @@ app.post("/", function (req, res) {
   });
 });
 
+//Connect to Database Weather
+mongoose.connect(configDB.url, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+});
+
+const connection = mongoose.connection;
+
+connection.once("open", function () {
+  console.log("MongoDB database connection established successfully");
+});
+require("./route/routes")(app);
+
 app.listen(3000, function () {
-  console.log("Example app listening on port 3000!");
+  console.log("Weather App listening on port 3000!");
 });
