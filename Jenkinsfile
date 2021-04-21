@@ -11,10 +11,10 @@ node {
     }
     
     stage('Deploy'){
-      if(env.BRANCH_NAME == 'master'){
-        sh 'docker compose up'
+     
+        sh '/usr/local/bin/docker-compose up -d'
         
-      }
+      
     }
   }
   catch (err) {
